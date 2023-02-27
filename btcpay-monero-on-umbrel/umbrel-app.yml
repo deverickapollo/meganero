@@ -1,7 +1,7 @@
 manifestVersion: 1
-id: btcpay-altcoin-monero
-name: BTCPay Server Monero 
-tagline: Accept Bitcoin and Monero payments with 0 fees & no 3rd party
+id: 100sats-btcpay-altcoins
+name: BTCPay Server Altcoins 
+tagline: Accept Bitcoin and Altcoin payments with 0 fees & no 3rd party
 icon: https://svgur.com/i/mvA.svg
 category: Development
 version: "1.0.0"
