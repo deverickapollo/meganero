@@ -1,11 +1,11 @@
 manifestVersion: 1
 id: sats-btcpay-altcoin
-name: BTCPay Server Altcoins
-tagline: Accept Bitcoin and Altcoin payments with 0 fees & no 3rd party
-icon: https://svgur.com/i/mvA.svg
+name: BTCPay Server (Monero)
+tagline: Accept Bitcoin and Monero payments with 0 fees & no 3rd party
+icon: https://raw.githubusercontent.com/btcpayserver/btcpayserver-media/master/BTCPay%20Server%20Icon.png
 category: Finance
 version: "1.0.0"
-port: 3003
+port: 49392
 description: >-
   BTCPay Server is a payment processor that allows you to receive
   payments in Bitcoin (and altcoins) directly, with no fees, transaction cost or
@@ -26,7 +26,9 @@ gallery:
   - https://i.imgur.com/yyVG0Jb.jpeg
 releaseNotes: >-
   Add what's new in the latest version of your app here.
-dependencies: []
+dependencies: 
+  - sats-monerod
+  - sats-bitcoind
 path: ""
 defaultUsername: ""
 defaultPassword: ""
