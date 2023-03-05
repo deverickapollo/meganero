@@ -26,9 +26,9 @@ gallery:
   - https://i.imgur.com/yyVG0Jb.jpeg
 releaseNotes: >-
   Add what's new in the latest version of your app here.
-dependencies: 
-  - sats-monerod
-  - sats-bitcoind
+# dependencies: 
+#   - sats-monerod
+#   - sats-bitcoind
 path: ""
 defaultUsername: ""
 defaultPassword: ""
