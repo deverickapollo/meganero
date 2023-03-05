@@ -1,5 +1,5 @@
 manifestVersion: 1
-id: sats-btcpay-altcoin
+id: sats-btcpay-altcoins
 name: BTCPay Server (Monero)
 tagline: Accept Bitcoin and Monero payments with 0 fees & no 3rd party
 icon: https://raw.githubusercontent.com/btcpayserver/btcpayserver-media/master/BTCPay%20Server%20Icon.png
@@ -26,9 +26,7 @@ gallery:
   - https://i.imgur.com/yyVG0Jb.jpeg
 releaseNotes: >-
   Add what's new in the latest version of your app here.
-# dependencies: 
-#   - sats-monerod
-#   - sats-bitcoind
+dependencies: []
 path: ""
 defaultUsername: ""
 defaultPassword: ""
