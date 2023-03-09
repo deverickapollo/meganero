@@ -6,6 +6,39 @@ services:
       APP_HOST: sats-btcpay-altcoins_web_1
       APP_PORT: 49392
       PROXY_AUTH_ADD: "false"
+  web:
+    image: btcpayserver/btcpayserver:1.8.1-altcoins@sha256:2ee57e0ba118406c286d7a9fd70f684bdbfd0a1a8e5b890aeb2e81e915a3ea72 # 1.8.1-altcoins
+    user: "root:root"
+    restart: on-failure
+    stop_grace_period: 1m
+    container_name: sats-btcpay-altcoins_web_1
+    expose:
+      - "49392"
+    depends_on: [nbxplorer, postgres]
+    entrypoint: ["dotnet", "BTCPayServer.dll"]
+    volumes:
+      - ${APP_DATA_DIR}/data/btcpay:/data
+      - ${APP_DATA_DIR}/data/nbxplorer:/data/.nbxplorer
+      - ${APP_DATA_DIR}/btcpay_pluginsdir:/data/plugins
+      - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
+      - ${APP_DATA_DIR}/data/xmr_wallet:/root/xmr_wallet
+    environment:
+      HOME: "/data"
+      BTCPAY_DATADIR: "/data"
+      BTCPAY_PLUGINDIR: "/data/plugins"
+      BTCPAY_DOCKERDEPLOYMENT: "false"
+      BTCPAY_POSTGRES: "User ID=postgres;Host=sats-btcpay-altcoins_postgres_1;Port=5432;Database=btcpayserver$APP_BITCOIN_NETWORK"
+      BTCPAY_NETWORK: "$APP_BITCOIN_NETWORK"
+      BTCPAY_BIND: 0.0.0.0:49392
+      BTCPAY_CHAINS: "btc,xmr"
+      BTCPAY_BTCEXPLORERURL: http://sats-btcpay-altcoins_nbxplorer_1:32838
+      BTCPAY_XMR_DAEMON_URI: http://sats-btcpay-altcoins_monerod_1:18081
+      BTCPAY_XMR_WALLET_DAEMON_URI: http://sats-btcpay-altcoins_monerod_wallet_1:18082
+      BTCPAY_XMR_WALLET_DAEMON_WALLETDIR: /root/xmr_wallet
+      BTCPAY_BTCLIGHTNING: "type=lnd-rest;server=https://$APP_LIGHTNING_NODE_IP:$APP_LIGHTNING_NODE_REST_PORT/;macaroonfilepath=/lnd/data/chain/bitcoin/$APP_BITCOIN_NETWORK/admin.macaroon;allowinsecure=true"
+      BTCPAY_SOCKSENDPOINT: $TOR_PROXY_IP:$TOR_PROXY_PORT
+      BTCPAY_EXPLORERPOSTGRES: User ID=postgres;Host=sats-btcpay-altcoins_postgres_1;Port=5432;Application Name=nbxplorer;MaxPoolSize=20;Database=nbxplorer$APP_BITCOIN_NETWORK
+      BTCPAY_TORSERVICES: "sats-btcpay-altcoins_web_1:$APP_HIDDEN_SERVICE"
 
   nbxplorer:
     image: nicolasdorier/nbxplorer:2.3.62@sha256:8f484e37fc2ab7f9bf7524ad7d4d5a09a39d5bc3dee5f84cfa43f93be3396e92
@@ -22,7 +55,7 @@ services:
       NBXPLORER_BIND: 0.0.0.0:32838
       NBXPLORER_CHAINS: "btc"
       NBXPLORER_SIGNALFILEDIR: "/data"
-      NBXPLORER_BTCRPCURL: "http://$APP_BITCOIN_NODE_IP:$APP_BITCOIN_RPC_PORT"
+      NBXPLORER_BTCRPCURL: http://$APP_BITCOIN_NODE_IP:$APP_BITCOIN_RPC_PORT
       NBXPLORER_BTCNODEENDPOINT: $APP_BITCOIN_NODE_IP:$APP_BITCOIN_P2P_PORT
       NBXPLORER_BTCRPCUSER: $APP_BITCOIN_RPC_USER
       NBXPLORER_BTCRPCPASSWORD: $APP_BITCOIN_RPC_PASS
@@ -31,40 +64,6 @@ services:
       NBXPLORER_NOMIGRATEEVTS: 1
       NBXPLORER_BTCHASTXINDEX: 1
 
-  web:
-    image: btcpayserver/btcpayserver:1.7.12-altcoins@sha256:cec015b892f85408ceca87bcd32c31d17b73945184ea0408365c158af04b35e5
-    user: "1000:1000"
-    restart: on-failure
-    stop_grace_period: 1m
-    container_name: sats-btcpay-altcoins_web_1
-    expose:
-      - "49392"
-    depends_on: [nbxplorer, postgres]
-    entrypoint: ["dotnet", "BTCPayServer.dll"]
-    volumes:
-      - ${APP_DATA_DIR}/data/btcpay:/data
-      - ${APP_DATA_DIR}/data/nbxplorer:/data/.nbxplorer
-      - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
-      - ${APP_DATA_DIR}/data/xmr_wallet:/root/xmr_wallet"
-    environment:
-      HOME: "/data"
-      BTCPAY_DATADIR: "/data"
-      BTCPAY_PLUGINDIR: "/data/plugins"
-      BTCPAY_DOCKERDEPLOYMENT: "false"
-      BTCPAY_DEBUGLOG: btcpay.log
-      BTCPAY_POSTGRES: "User ID=postgres;Host=sats-btcpay-altcoins_postgres_1;Port=5432;Database=btcpayserver$APP_BITCOIN_NETWORK"
-      BTCPAY_NETWORK: "$APP_BITCOIN_NETWORK"
-      BTCPAY_BIND: 0.0.0.0:3033
-      BTCPAY_CHAINS: "btc,xmr"
-      BTCPAY_BTCEXPLORERURL: "http://sats-btcpay-altcoins_nbxplorer_1:32838"
-      BTCPAY_XMR_DAEMON_URI: http://sats-btcpay-altcoins_monerod_1:18081
-      BTCPAY_XMR_WALLET_DAEMON_URI: http://sats-btcpay-altcoins_monerod_wallet_1:18082
-      BTCPAY_XMR_WALLET_DAEMON_WALLETDIR: /root/xmr_wallet
-      BTCPAY_BTCLIGHTNING: "type=lnd-rest;server=https://$APP_LIGHTNING_NODE_IP:$APP_LIGHTNING_NODE_REST_PORT/;macaroonfilepath=/lnd/data/chain/bitcoin/$APP_BITCOIN_NETWORK/admin.macaroon;allowinsecure=true"
-      BTCPAY_SOCKSENDPOINT: $TOR_PROXY_IP:$TOR_PROXY_PORT
-      BTCPAY_EXPLORERPOSTGRES: User ID=postgres;Host=sats-btcpay-altcoins_postgres_1;Port=5432;Application Name=nbxplorer;MaxPoolSize=20;Database=nbxplorer$APP_BITCOIN_NETWORK
-      BTCPAY_TORSERVICES: "sats-btcpay-altcoins_web_1:$APP_HIDDEN_SERVICE"
-      
   monerod:
     restart: unless-stopped
     container_name: sats-btcpay-altcoins_monerod_1
@@ -72,24 +71,21 @@ services:
     user: "root:root"
     image: btcpayserver/monero:0.18.1.1
     entrypoint: monerod --rpc-bind-ip=0.0.0.0 --confirm-external-bind --rpc-bind-port=18081 --non-interactive --block-notify="/bin/sh ./scripts/notifier.sh -X GET http://sats-btcpay-altcoins_web_1:49392/monerolikedaemoncallback/block?cryptoCode=xmr&hash=%s" --hide-my-port --prune-blockchain --enable-dns-blocklist
-    # entrypoint: monerod --rpc-bind-ip=0.0.0.0 --confirm-external-bind --rpc-bind-port=18081 --non-interactive  --hide-my-port --prune-blockchain --enable-dns-blocklist
     expose:
       - "18080"
       - "18081"
-      - "18082"
     volumes:
       - ${APP_DATA_DIR}/data/xmr_data:/home/monero/.bitmonero
       - ${APP_DATA_DIR}/data/xmr_wallet:/wallet
-    
+
+
   monerod_wallet:
     restart: unless-stopped
     container_name: btcpayserver_monero_wallet
     stop_grace_period: 1m
     # user: "root:root"
     image: btcpayserver/monero:0.18.1.1
-    # image: btcpayserver/monero:0.18.1.1-amd64
     entrypoint: monero-wallet-rpc --rpc-bind-ip=0.0.0.0 --disable-rpc-login --confirm-external-bind --rpc-bind-port=18082 --non-interactive --trusted-daemon  --daemon-address=monerod:18081 --wallet-file=/wallet/wallet --password-file=/wallet/password --tx-notify="/bin/sh ./scripts/notifier.sh  -X GET http://web:49392/monerolikedaemoncallback/tx?cryptoCode=xmr&hash=%s"
-    # entrypoint: monero-wallet-rpc --rpc-bind-ip=0.0.0.0 --disable-rpc-login --confirm-external-bind --rpc-bind-port=18082 --non-interactive --trusted-daemon  --daemon-address=monerod:18081 --wallet-file=/wallet/wallet --password-file=/wallet/password
     expose:
       - "18082"
     volumes:
@@ -110,5 +106,3 @@ services:
       POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql/data
-
-
