@@ -19,7 +19,7 @@ services:
     volumes:
       - ${APP_DATA_DIR}/data/btcpay:/data
       - ${APP_DATA_DIR}/data/nbxplorer:/data/.nbxplorer
-      - ${APP_DATA_DIR}/btcpay_pluginsdir:/data/plugins
+      - ${APP_DATA_DIR}/data/btcpay_pluginsdir:/data/plugins
       - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
       - ${APP_DATA_DIR}/data/xmr_wallet:/root/xmr_wallet
     environment:
@@ -31,7 +31,7 @@ services:
       BTCPAY_NETWORK: "$APP_BITCOIN_NETWORK"
       BTCPAY_BIND: 0.0.0.0:49392
       BTCPAY_CHAINS: "btc,xmr"
-      BTCPAY_BTCEXPLORERURL: http://sats-btcpay-altcoins_nbxplorer_1:32838
+      BTCPAY_BTCEXPLORERURL: "http://sats-btcpay-altcoins_nbxplorer_1:32838"
       BTCPAY_XMR_DAEMON_URI: http://sats-btcpay-altcoins_monerod_1:18081
       BTCPAY_XMR_WALLET_DAEMON_URI: http://sats-btcpay-altcoins_monerod_wallet_1:18082
       BTCPAY_XMR_WALLET_DAEMON_WALLETDIR: /root/xmr_wallet
@@ -47,6 +47,8 @@ services:
     stop_grace_period: 1m
     depends_on: [postgres]
     container_name: sats-btcpay-altcoins_nbxplorer_1
+    expose:
+      - "32838"
     volumes:
       - ${APP_DATA_DIR}/data/nbxplorer:/data
     environment:
@@ -55,7 +57,7 @@ services:
       NBXPLORER_BIND: 0.0.0.0:32838
       NBXPLORER_CHAINS: "btc"
       NBXPLORER_SIGNALFILEDIR: "/data"
-      NBXPLORER_BTCRPCURL: http://$APP_BITCOIN_NODE_IP:$APP_BITCOIN_RPC_PORT
+      NBXPLORER_BTCRPCURL: "http://$APP_BITCOIN_NODE_IP:$APP_BITCOIN_RPC_PORT"
       NBXPLORER_BTCNODEENDPOINT: $APP_BITCOIN_NODE_IP:$APP_BITCOIN_P2P_PORT
       NBXPLORER_BTCRPCUSER: $APP_BITCOIN_RPC_USER
       NBXPLORER_BTCRPCPASSWORD: $APP_BITCOIN_RPC_PASS
@@ -81,9 +83,8 @@ services:
 
   monerod_wallet:
     restart: unless-stopped
-    container_name: btcpayserver_monero_wallet
+    container_name: sats-btcpayserver_monero_wallet_1
     stop_grace_period: 1m
-    # user: "root:root"
     image: btcpayserver/monero:0.18.1.1
     entrypoint: monero-wallet-rpc --rpc-bind-ip=0.0.0.0 --disable-rpc-login --confirm-external-bind --rpc-bind-port=18082 --non-interactive --trusted-daemon  --daemon-address=monerod:18081 --wallet-file=/wallet/wallet --password-file=/wallet/password --tx-notify="/bin/sh ./scripts/notifier.sh  -X GET http://web:49392/monerolikedaemoncallback/tx?cryptoCode=xmr&hash=%s"
     expose:
@@ -98,6 +99,7 @@ services:
     image: btcpayserver/postgres:13.7@sha256:dadf0048895a888d88a2dd773dde2f5868c45f74ad37c6d208694df54b590531
     # This needs to run as root for migrations to succeed
     # user: "1000:1000"
+    container_name: sats-btcpay-altcoins_postgres_1
     restart: on-failure
     # https://github.com/btcpayserver/btcpayserver-docker/commit/a65e7db6851092c75c5ac6c091a5f36ccc5fc26e
     command: ["-c", "random_page_cost=1.0", "-c", "shared_preload_libraries=pg_stat_statements"]
