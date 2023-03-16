@@ -33,7 +33,7 @@ services:
       BTCPAY_CHAINS: "btc,xmr"
       BTCPAY_BTCEXPLORERURL: "http://sats-btcpay-altcoins_nbxplorer_1:32838"
       BTCPAY_XMR_DAEMON_URI: http://sats-btcpay-altcoins_monerod_1:18081
-      BTCPAY_XMR_WALLET_DAEMON_URI: http://sats-btcpay-altcoins_monerod_wallet_1:18082
+      BTCPAY_XMR_WALLET_DAEMON_URI: http://monerod_wallet:18082
       BTCPAY_XMR_WALLET_DAEMON_WALLETDIR: /data/xmr_wallet
       BTCPAY_BTCLIGHTNING: "type=lnd-rest;server=https://$APP_LIGHTNING_NODE_IP:$APP_LIGHTNING_NODE_REST_PORT/;macaroonfilepath=/lnd/data/chain/bitcoin/$APP_BITCOIN_NETWORK/admin.macaroon;allowinsecure=true"
       BTCPAY_SOCKSENDPOINT: $TOR_PROXY_IP:$TOR_PROXY_PORT
@@ -92,7 +92,6 @@ services:
     volumes:
       - ${APP_DATA_DIR}/data/xmr_data:/home/monero/.bitmonero
       - ${APP_DATA_DIR}/data/xmr_wallet:/home/monero/wallet
-
 
   postgres:
     image: btcpayserver/postgres:13.7@sha256:dadf0048895a888d88a2dd773dde2f5868c45f74ad37c6d208694df54b590531
