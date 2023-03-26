@@ -1,0 +1,29 @@
+manifestVersion: 1.1
+id: sats-monero-node
+category: Finance
+name: Monero Node
+version: "0.0.1"
+tagline: Run your monero node and independently store and validate every single Monero transaction with it.
+description: >-
+  Run your monero node and independently store and validate every single Monero transaction with it.
+  This is a full node that will download the entire Monero blockchain and store it on your Umbrel. 
+  This is the most secure way to run a Monero node, but it will take a long time to sync and will require a lot of storage space.
+developer: Umbrel
+website: https://umbrel.com
+dependencies: []
+repo: https://github.com/deverickapollo/umbrel-monero
+support: https://github.com/deverickapollo/umbrel-monero/issues
+port: 8889
+submitter: Deverick
+submission: https://github.com/hashes4merkle/hundredsats
+gallery:
+  - 1.jpg
+  - 2.jpg
+  - 3.jpg
+  - 4.jpg
+  - 5.jpg
+path: ""
+defaultPassword: ""
+releaseNotes: >-
+ Initial Release
+
