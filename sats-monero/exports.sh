@@ -13,6 +13,7 @@ export APP_MONERO_TOR_PORT="9901"
 export APP_MONERO_RPC_HIDDEN_SERVICE="notyetset.onion"
 export APP_MONERO_P2P_HIDDEN_SERVICE="notyetset.onion"
 
+
 MONERO_CHAIN="main"
 MONERO_ENV_FILE="${EXPORTS_APP_DIR}/.env"
 
@@ -31,6 +32,9 @@ MONERO_ENV_FILE="${EXPORTS_APP_DIR}/.env"
 		esac
 	fi
 } > /dev/null || true
+
+#temporarily set to mainnet
+MONERO_NETWORK="mainnet"
 
 if [[ ! -f "${MONERO_ENV_FILE}" ]]; then
 	if [[ -z "${MONERO_NETWORK}" ]]; then
@@ -88,18 +92,22 @@ BIN_ARGS=()
 # BIN_ARGS+=( "-bind=${APP_BITCOIN_NODE_IP}" )
 # BIN_ARGS+=( "-port=${APP_BITCOIN_P2P_PORT}" )
 # BIN_ARGS+=( "-rpcport=${APP_BITCOIN_RPC_PORT}" )
-BIN_ARGS+=( "-port=18080" )
-BIN_ARGS+=( "-rpcport=18081" )
-BIN_ARGS+=( "--rpc-bind-ip=${APP_MONERO_NODE_IP}" )
-BIN_ARGS+=( "--rpc-bind-ip=127.0.0.1" )
-BIN_ARGS+=( "--rpc-bind-ip=${NETWORK_IP}/16" )
-BIN_ARGS+=( "--rpc-bind-ip=127.0.0.1" )
+BIN_ARGS+=( "--rpc-bind-port=18081" )
+BIN_ARGS+=( "--rpc-bind-ip=0.0.0.0" )
+BIN_ARGS+=( "--confirm-external-bind" )
+BIN_ARGS+=( "--hide-my-port" )
+BIN_ARGS+=( "--prune-blockchain" )
+BIN_ARGS+=( "--enable-dns-blocklist" )
+# BIN_ARGS+=( "--rpc-bind-ip=${APP_MONERO_NODE_IP}" )
+# BIN_ARGS+=( "--rpc-bind-ip=127.0.0.1" )
+# BIN_ARGS+=( "--rpc-bind-ip=${NETWORK_IP}/16" )
+# BIN_ARGS+=( "--rpc-bind-ip=127.0.0.1" )
 BIN_ARGS+=( "--rpc-login=\"${APP_MONERO_RPC_AUTH}\"" )
 
 
 export APP_MONERO_COMMAND=$(IFS=" "; echo "${BIN_ARGS[@]}")
 
-# echo "${APP_MONERO_COMMAND}"
+#echo "${APP_MONERO_COMMAND}"
 
 rpc_hidden_service_file="${EXPORTS_TOR_DATA_DIR}/app-${EXPORTS_APP_ID}-rpc/hostname"
 p2p_hidden_service_file="${EXPORTS_TOR_DATA_DIR}/app-${EXPORTS_APP_ID}-p2p/hostname"

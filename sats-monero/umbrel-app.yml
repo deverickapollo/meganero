@@ -1,8 +1,9 @@
 manifestVersion: 1.1
-id: sats-monero-node
+id: sats-monero
 category: Finance
 name: Monero Node
-version: "0.0.1"
+icon: https://raw.githubusercontent.com/monero-project/monero-site/master/img/community-logo.png
+version: "1.0.0"
 tagline: Run your monero node and independently store and validate every single Monero transaction with it.
 description: >-
   Run your monero node and independently store and validate every single Monero transaction with it.
@@ -13,7 +14,7 @@ website: https://www.getmonero.org/
 dependencies: []
 repo: https://github.com/deverickapollo/umbrel-monero
 support: https://github.com/deverickapollo/umbrel-monero/issues
-port: 9004
+port: 8889
 submitter: Deverick
 submission: https://github.com/hashes4merkle/hundredsats
 gallery:
