@@ -8,12 +8,12 @@ services:
       PROXY_AUTH_ADD: "false"
       
   sats-server_1:
-    image: deverick/monero-frontend:v1.0.0
+    image: deverickapollo/umbrel-monero:dev
     container_name: sats-server_1
     depends_on: [monerod]
     restart: on-failure
     ports:
-      - "8889:8889"
+      - "8887:8889"
     volumes:
       - ${PWD}/data/app:/data # volume to persist advanced settings json
       - ${PWD}/data/monero:/monero/.monero # volume to persist umbrel-monero.conf and monero.conf
