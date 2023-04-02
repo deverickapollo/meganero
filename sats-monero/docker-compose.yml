@@ -5,7 +5,7 @@ services:
     environment:
       APP_HOST: sats-server_1
       APP_PORT: 8889
-      PROXY_AUTH_ADD: "false"
+      PROXY_AUTH_ADD: "true"
       
   sats-server_1:
     image: deverickapollo/umbrel-monero:dev
@@ -13,7 +13,7 @@ services:
     depends_on: [monerod]
     restart: on-failure
     ports:
-      - "8887:8889"
+      - "8889:8889"
     volumes:
       - ${PWD}/data/app:/data # volume to persist advanced settings json
       - ${PWD}/data/monero:/monero/.monero # volume to persist umbrel-monero.conf and monero.conf
