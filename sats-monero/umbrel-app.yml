@@ -2,7 +2,7 @@ manifestVersion: 1.1
 id: sats-monero
 category: Finance
 name: Monero Node
-icon: https://raw.githubusercontent.com/deverickapollo/umbrel-monero/dev/ui/src/assets/community-monero-app-icon.png
+icon: https://raw.githubusercontent.com/deverickapollo/umbrel-monero/dev/ui/src/assets/community-monero-icon.png
 version: "1.0.0"
 tagline: Run your monero node and independently store and validate every single Monero transaction with it.
 description: >-
@@ -27,4 +27,3 @@ path: ""
 defaultPassword: ""
 releaseNotes: >-
  Initial Release
-
