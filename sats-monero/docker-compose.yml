@@ -12,8 +12,8 @@ services:
     container_name: sats-server_1
     depends_on: [monerod]
     restart: on-failure
-    ports:
-      - "8889:8889"
+    expose:
+      - "8889"
     volumes:
       - ${PWD}/data/app:/data # volume to persist advanced settings json
       - ${PWD}/data/monero:/monero/.monero # volume to persist umbrel-monero.conf and monero.conf
