@@ -8,7 +8,7 @@ services:
       PROXY_AUTH_ADD: "true"
       
   sats-server_1:
-    image: deverickapollo/umbrel-monero:dev
+    image: deverickapollo/umbrel-monero:master
     container_name: sats-server_1
     depends_on: [monerod]
     restart: on-failure
