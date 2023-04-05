@@ -2,7 +2,7 @@ manifestVersion: 1
 id: sats-btcpay-altcoins
 name: BTCPay Server (Monero)
 tagline: Accept Bitcoin and Monero payments with 0 fees & no 3rd party
-icon: https://raw.githubusercontent.com/btcpayserver/btcpayserver-media/56e8db5eefb7db43359a779aa39def413f40a3c0/BTCPay%20Icon%20with%20background.png
+icon: https://raw.githubusercontent.com/deverickapollo/umbrel-monero/master/ui/src/assets/btcpay.png
 category: Finance
 version: "1.0.0"
 port: 49392
