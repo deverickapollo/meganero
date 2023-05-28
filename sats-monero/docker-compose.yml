@@ -46,9 +46,7 @@ services:
     user: "1000:1000"
     restart: on-failure
     stop_grace_period: 15m
-    # command: ["${APP_MONERO_COMMAND}"]
-    # command: "${APP_MONERO_COMMAND}"
-    command: --rpc-bind-ip=0.0.0.0 --confirm-external-bind --rpc-bind-port=18081 --hide-my-port --prune-blockchain --enable-dns-blocklist
+    command: "${APP_MONERO_COMMAND}"
     image: sethsimmons/simple-monerod:latest
     ports:
       - "${APP_MONERO_P2P_PORT}:${APP_MONERO_P2P_PORT}"

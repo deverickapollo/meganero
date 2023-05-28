@@ -14,22 +14,38 @@ export APP_MONERO_RPC_HIDDEN_SERVICE="notyetset.onion"
 export APP_MONERO_P2P_HIDDEN_SERVICE="notyetset.onion"
 
 
-MONERO_CHAIN="main"
+MONERO_CHAIN="mainnet"
 MONERO_ENV_FILE="${EXPORTS_APP_DIR}/.env"
 
+TOR_ENABLED="false"
+I2P_ENABLED="false"
+IMCOMING_CONNECTIONS="false"
+DBSYNCMODE="false"
+PRUNE="false"
+REINDEX="false"
+TORPROXYFORCLEARNET="false"
+CLEARNET="false"
 {
 	MONERO_APP_CONFIG_FILE="${EXPORTS_APP_DIR}/data/app/monero-config.json"
 	if [[ -f "${MONERO_APP_CONFIG_FILE}" ]]
 	then
 		monero_app_network=$(jq -r '.network' "${MONERO_APP_CONFIG_FILE}")
 		case $monero_app_network in
-			"main")
+			"mainnet")
 				MONERO_NETWORK="mainnet";;
-			"test")
+			"testnet")
 				MONERO_NETWORK="testnet";;
 			"stagenet")
 				MONERO_NETWORK="stagenet";;
 		esac
+		TOR_ENABLED=$(jq -r '.tor' "${MONERO_APP_CONFIG_FILE}")
+		I2P_ENABLED=$(jq -r '.i2p' "${MONERO_APP_CONFIG_FILE}")
+		IMCOMING_CONNECTIONS=$(jq -r '.incoming_connections' "${MONERO_APP_CONFIG_FILE}")
+		DBSYNCMODE=$(jq -r '.dbSyncMode' "${MONERO_APP_CONFIG_FILE}")
+		PRUNE=$(jq -r '.prune' "${MONERO_APP_CONFIG_FILE}")
+		REINDEX=$(jq -r '.reindex' "${MONERO_APP_CONFIG_FILE}")
+		TORPROXYFORCLEARNET=$(jq -r '.torProxyForClearnet' "${MONERO_APP_CONFIG_FILE}")
+		CLEARNET=$(jq -r '.clearnet' "${MONERO_APP_CONFIG_FILE}")
 	fi
 } > /dev/null || true
 
@@ -66,14 +82,14 @@ fi
 } > /dev/null || true
 
 if [[ "${APP_MONERO_NETWORK}" == "mainnet" ]]; then
-	MONERO_CHAIN="main"
+	MONERO_CHAIN="mainnet"
 elif [[ "${APP_MONERO_NETWORK}" == "testnet" ]]; then
-	MONERO_CHAIN="test"
+	MONERO_CHAIN="testnet"
 	# export APP_BITCOIN_RPC_PORT="18332"
 	# export APP_BITCOIN_P2P_PORT="18333"
 	# export APP_BITCOIN_TOR_PORT="18334"
 elif [[ "${APP_MONERO_NETWORK}" == "stagenet" ]]; then
-	MONERO_CHAIN="stage"
+	MONERO_CHAIN="stagenet"
 	# export APP_BITCOIN_RPC_PORT="38332"
 	# export APP_BITCOIN_P2P_PORT="38333"
 	# export APP_BITCOIN_TOR_PORT="38334"
@@ -96,7 +112,11 @@ BIN_ARGS+=( "--rpc-bind-port=18081" )
 BIN_ARGS+=( "--rpc-bind-ip=0.0.0.0" )
 BIN_ARGS+=( "--confirm-external-bind" )
 BIN_ARGS+=( "--hide-my-port" )
-BIN_ARGS+=( "--prune-blockchain" )
+# check if prune is set to true
+if [[ "${PRUNE}" == "true" ]]; then
+	BIN_ARGS+=( "--prune-blockchain" )
+fi
+
 BIN_ARGS+=( "--enable-dns-blocklist" )
 # BIN_ARGS+=( "--rpc-bind-ip=${APP_MONERO_NODE_IP}" )
 # BIN_ARGS+=( "--rpc-bind-ip=127.0.0.1" )
@@ -104,10 +124,9 @@ BIN_ARGS+=( "--enable-dns-blocklist" )
 # BIN_ARGS+=( "--rpc-bind-ip=127.0.0.1" )
 BIN_ARGS+=( "--rpc-login=\"${APP_MONERO_RPC_AUTH}\"" )
 
-
 export APP_MONERO_COMMAND=$(IFS=" "; echo "${BIN_ARGS[@]}")
 
-#echo "${APP_MONERO_COMMAND}"
+echo "${APP_MONERO_COMMAND}"
 
 rpc_hidden_service_file="${EXPORTS_TOR_DATA_DIR}/app-${EXPORTS_APP_ID}-rpc/hostname"
 p2p_hidden_service_file="${EXPORTS_TOR_DATA_DIR}/app-${EXPORTS_APP_ID}-p2p/hostname"
