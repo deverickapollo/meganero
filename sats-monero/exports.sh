@@ -86,14 +86,14 @@ if [[ "${APP_MONERO_NETWORK}" == "mainnet" ]]; then
 	MONERO_CHAIN="mainnet"
 elif [[ "${APP_MONERO_NETWORK}" == "testnet" ]]; then
 	MONERO_CHAIN="testnet"
-	# export APP_BITCOIN_RPC_PORT="18332"
-	# export APP_BITCOIN_P2P_PORT="18333"
-	# export APP_BITCOIN_TOR_PORT="18334"
+	export APP_MONERO_RPC_PORT="28081"
+	export APP_MONERO_P2P_PORT="28080"
+
 elif [[ "${APP_MONERO_NETWORK}" == "stagenet" ]]; then
 	MONERO_CHAIN="stagenet"
-	# export APP_BITCOIN_RPC_PORT="38332"
-	# export APP_BITCOIN_P2P_PORT="38333"
-	# export APP_BITCOIN_TOR_PORT="38334"
+	export APP_MONERO_RPC_PORT="38081"
+	export APP_MONERO_P2P_PORT="38080"
+
 else
 	echo "Warning (${EXPORTS_APP_ID}): Monero Network '${APP_MONERO_NETWORK}' is not supported"
 fi
