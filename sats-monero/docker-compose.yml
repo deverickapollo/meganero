@@ -44,7 +44,7 @@ services:
 
   monerod:
     user: "1000:1000"
-    restart: on-failure
+    restart: unless-stopped
     stop_grace_period: 15m
     command: "${APP_MONERO_COMMAND}"
     healthcheck:
