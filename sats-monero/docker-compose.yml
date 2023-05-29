@@ -5,7 +5,7 @@ services:
     environment:
       APP_HOST: sats-server_1
       APP_PORT: 8889
-      PROXY_AUTH_ADD: "true"
+      PROXY_AUTH_ADD: "false"
       
   sats-server_1:
     image: deverickapollo/umbrel-monero:master
@@ -15,7 +15,7 @@ services:
     expose:
       - "8889"
     volumes:
-      - ${APP_DIR}/app:/data # volume to persist advanced settings json
+      - ${APP_DATA_DIR}/app:/data # volume to persist advanced settings json
       - ${APP_MONERO_DATA_DIR}:/monero/.monero # volume to persist umbrel-monero.conf and monero.conf
     environment:
       PORT: "8889"
@@ -47,6 +47,8 @@ services:
     restart: on-failure
     stop_grace_period: 15m
     command: "${APP_MONERO_COMMAND}"
+    healthcheck:
+      disable: true
     image: sethsimmons/simple-monerod:latest
     ports:
       - "${APP_MONERO_P2P_PORT}:${APP_MONERO_P2P_PORT}"

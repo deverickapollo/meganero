@@ -93,7 +93,6 @@ elif [[ "${APP_MONERO_NETWORK}" == "stagenet" ]]; then
 	MONERO_CHAIN="stagenet"
 	export APP_MONERO_RPC_PORT="38081"
 	export APP_MONERO_P2P_PORT="38080"
-
 else
 	echo "Warning (${EXPORTS_APP_ID}): Monero Network '${APP_MONERO_NETWORK}' is not supported"
 fi
