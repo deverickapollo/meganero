@@ -7,6 +7,7 @@ export APP_MONERO_RPC_USER="monero"
 export APP_MONERO_RPC_PASS="monero"
 
 export APP_MONERO_DATA_DIR="${EXPORTS_APP_DIR}/data/monero"
+export APP_DIR="${EXPORTS_APP_DIR}/data"
 export APP_MONERO_RPC_PORT="18081"
 export APP_MONERO_P2P_PORT="18080"
 export APP_MONERO_TOR_PORT="9901"
@@ -111,17 +112,14 @@ BIN_ARGS=()
 BIN_ARGS+=( "--rpc-bind-port=18081" )
 BIN_ARGS+=( "--rpc-bind-ip=0.0.0.0" )
 BIN_ARGS+=( "--confirm-external-bind" )
-BIN_ARGS+=( "--hide-my-port" )
+# BIN_ARGS+=( "--hide-my-port" )
 # check if prune is set to true
 if [[ "${PRUNE}" == "true" ]]; then
 	BIN_ARGS+=( "--prune-blockchain" )
 fi
-
-BIN_ARGS+=( "--enable-dns-blocklist" )
+# BIN_ARGS+=( "--enable-dns-blocklist" )
 # BIN_ARGS+=( "--rpc-bind-ip=${APP_MONERO_NODE_IP}" )
-# BIN_ARGS+=( "--rpc-bind-ip=127.0.0.1" )
 # BIN_ARGS+=( "--rpc-bind-ip=${NETWORK_IP}/16" )
-# BIN_ARGS+=( "--rpc-bind-ip=127.0.0.1" )
 BIN_ARGS+=( "--rpc-login=\"${APP_MONERO_RPC_AUTH}\"" )
 
 export APP_MONERO_COMMAND=$(IFS=" "; echo "${BIN_ARGS[@]}")
