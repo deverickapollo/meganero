@@ -110,7 +110,7 @@ if [[ "${PRUNE}" == "true" ]]; then
 	BIN_ARGS+=( "--prune-blockchain" )
 fi
 # Set db-sync-mode to DBSYNCMODE
-BIN_ARGS+=( "--db-sync-mode=${DBSYNCMODE}:${DBSYNCTYPE}:${DBBLOCKSPERSYNC}bytes" )
+BIN_ARGS+=( "--db-sync-mode=${DBSYNCMODE}" )
 # BIN_ARGS+=( "--enable-dns-blocklist" )
 # BIN_ARGS+=( "--rpc-bind-ip=${APP_MONERO_NODE_IP}" )
 # BIN_ARGS+=( "--rpc-bind-ip=${NETWORK_IP}/16" )
