@@ -101,13 +101,6 @@ export MONERO_DEFAULT_NETWORK="${MONERO_CHAIN}"
 
 BIN_ARGS=()
 # Commenting out options that are replaced by generated config file. We should migrate all these over in a future update.
-# BIN_ARGS+=( "-chain=${BITCOIN_CHAIN}" )
-# BIN_ARGS+=( "-proxy=${TOR_PROXY_IP}:${TOR_PROXY_PORT}" )
-# BIN_ARGS+=( "-listen" )
-# BIN_ARGS+=( "-bind=0.0.0.0:${APP_BITCOIN_TOR_PORT}=onion" )
-# BIN_ARGS+=( "-bind=${APP_BITCOIN_NODE_IP}" )
-# BIN_ARGS+=( "-port=${APP_BITCOIN_P2P_PORT}" )
-# BIN_ARGS+=( "-rpcport=${APP_BITCOIN_RPC_PORT}" )
 BIN_ARGS+=( "--rpc-bind-port=18081" )
 BIN_ARGS+=( "--rpc-bind-ip=0.0.0.0" )
 BIN_ARGS+=( "--confirm-external-bind" )
@@ -116,6 +109,8 @@ BIN_ARGS+=( "--confirm-external-bind" )
 if [[ "${PRUNE}" == "true" ]]; then
 	BIN_ARGS+=( "--prune-blockchain" )
 fi
+# Set db-sync-mode to DBSYNCMODE
+BIN_ARGS+=( "--db-sync-mode=${DBSYNCMODE}:${DBSYNCTYPE}:${DBBLOCKSPERSYNC}bytes" )
 # BIN_ARGS+=( "--enable-dns-blocklist" )
 # BIN_ARGS+=( "--rpc-bind-ip=${APP_MONERO_NODE_IP}" )
 # BIN_ARGS+=( "--rpc-bind-ip=${NETWORK_IP}/16" )
