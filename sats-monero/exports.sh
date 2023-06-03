@@ -130,7 +130,7 @@ export APP_MONERO_P2P_HIDDEN_SERVICE="$(cat "${p2p_hidden_service_file}" 2>/dev/
 	# Migrate settings for app updates differently to fresh installs
 	MONERO_INSTALL_EXISTS="false"
 	MONERO_DATA_DIR="${EXPORTS_APP_DIR}/data/monero"
-	if [[ -d "${MONERO_DATA_DIR}/blocks" ]] || [[ -d "${MONERO_DATA_DIR}/testnet3/blocks" ]] || [[ -d "${MONERO_DATA_DIR}/regtest/blocks" ]]
+	if [[ -d "${MONERO_DATA_DIR}/lmdb" ]]
 	then
 	MONERO_INSTALL_EXISTS="true"
 	fi
