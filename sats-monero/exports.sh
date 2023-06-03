@@ -3,29 +3,25 @@ export APP_MONERO_NODE_IP="10.21.21.179"
 export MONEROD_IP="10.21.21.179"
 export APP_MONERO_TOR_PROXY_IP="10.21.21.180"
 export APP_MONERO_I2P_DAEMON_IP="10.21.21.181"
-export APP_MONERO_RPC_USER="monero"
-export APP_MONERO_RPC_PASS="monero"
 
 export APP_MONERO_DATA_DIR="${EXPORTS_APP_DIR}/data/monero"
-export APP_DIR="${EXPORTS_APP_DIR}/data"
 export APP_MONERO_RPC_PORT="18081"
 export APP_MONERO_P2P_PORT="18080"
 export APP_MONERO_TOR_PORT="9901"
-export APP_MONERO_RPC_HIDDEN_SERVICE="notyetset.onion"
-export APP_MONERO_P2P_HIDDEN_SERVICE="notyetset.onion"
 
-
+#temporarily set to mainnet
+MONERO_NETWORK="mainnet"
 MONERO_CHAIN="mainnet"
 MONERO_ENV_FILE="${EXPORTS_APP_DIR}/.env"
-
 TOR_ENABLED="false"
 I2P_ENABLED="false"
 IMCOMING_CONNECTIONS="false"
-DBSYNCMODE="false"
+DBSYNCMODE="fast"
 PRUNE="false"
 REINDEX="false"
 TORPROXYFORCLEARNET="false"
 CLEARNET="false"
+ENABLEBLOCKLIST="false"
 {
 	MONERO_APP_CONFIG_FILE="${EXPORTS_APP_DIR}/data/app/monero-config.json"
 	if [[ -f "${MONERO_APP_CONFIG_FILE}" ]]
@@ -41,8 +37,9 @@ CLEARNET="false"
 		esac
 		TOR_ENABLED=$(jq -r '.tor' "${MONERO_APP_CONFIG_FILE}")
 		I2P_ENABLED=$(jq -r '.i2p' "${MONERO_APP_CONFIG_FILE}")
-		IMCOMING_CONNECTIONS=$(jq -r '.incoming_connections' "${MONERO_APP_CONFIG_FILE}")
 		DBSYNCMODE=$(jq -r '.dbSyncMode' "${MONERO_APP_CONFIG_FILE}")
+		ENABLEBLOCKLIST=$(jq -r '.dnsBlockList' "${MONERO_APP_CONFIG_FILE}")
+		IMCOMING_CONNECTIONS=$(jq -r '.incoming_connections' "${MONERO_APP_CONFIG_FILE}")
 		PRUNE=$(jq -r '.prune' "${MONERO_APP_CONFIG_FILE}")
 		REINDEX=$(jq -r '.reindex' "${MONERO_APP_CONFIG_FILE}")
 		TORPROXYFORCLEARNET=$(jq -r '.torProxyForClearnet' "${MONERO_APP_CONFIG_FILE}")
@@ -50,8 +47,7 @@ CLEARNET="false"
 	fi
 } > /dev/null || true
 
-#temporarily set to mainnet
-MONERO_NETWORK="mainnet"
+
 
 if [[ ! -f "${MONERO_ENV_FILE}" ]]; then
 	if [[ -z "${MONERO_NETWORK}" ]]; then
@@ -109,11 +105,16 @@ BIN_ARGS+=( "--confirm-external-bind" )
 if [[ "${PRUNE}" == "true" ]]; then
 	BIN_ARGS+=( "--prune-blockchain" )
 fi
-# Set db-sync-mode to DBSYNCMODE
-BIN_ARGS+=( "--db-sync-mode=${DBSYNCMODE}" )
-# BIN_ARGS+=( "--enable-dns-blocklist" )
-# BIN_ARGS+=( "--rpc-bind-ip=${APP_MONERO_NODE_IP}" )
-# BIN_ARGS+=( "--rpc-bind-ip=${NETWORK_IP}/16" )
+# Set DBSYNCMODE to fast, fastest, or safe
+if [[ "${DBSYNCMODE}" == "fast" || "${DBSYNCMODE}" == "fastest" || "${DBSYNCMODE}" == "safe" ]]; then
+	BIN_ARGS+=( "--db-sync-mode=${DBSYNCMODE}" )
+fi
+#Check if enable block list is set to true
+if [[ "${ENABLEBLOCKLIST}" == "true" ]]; then
+	BIN_ARGS+=( "--enable-dns-blocklist" )
+fi
+
+#Configure rpc login credentials 
 BIN_ARGS+=( "--rpc-login=\"${APP_MONERO_RPC_AUTH}\"" )
 
 export APP_MONERO_COMMAND=$(IFS=" "; echo "${BIN_ARGS[@]}")
