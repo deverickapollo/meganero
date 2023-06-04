@@ -22,6 +22,7 @@ REINDEX="false"
 TORPROXYFORCLEARNET="false"
 CLEARNET="false"
 ENABLEBLOCKLIST="false"
+CONFIRMEXTERNALBIND="false"
 {
 	MONERO_APP_CONFIG_FILE="${EXPORTS_APP_DIR}/data/app/monero-config.json"
 	if [[ -f "${MONERO_APP_CONFIG_FILE}" ]]
@@ -37,6 +38,7 @@ ENABLEBLOCKLIST="false"
 		esac
 		TOR_ENABLED=$(jq -r '.tor' "${MONERO_APP_CONFIG_FILE}")
 		I2P_ENABLED=$(jq -r '.i2p' "${MONERO_APP_CONFIG_FILE}")
+		CONFIRMEXTERNALBIND=$(jq -r '.confirmExternalBind' "${MONERO_APP_CONFIG_FILE}")
 		DBSYNCMODE=$(jq -r '.dbSyncMode' "${MONERO_APP_CONFIG_FILE}")
 		ENABLEBLOCKLIST=$(jq -r '.dnsBlockList' "${MONERO_APP_CONFIG_FILE}")
 		IMCOMING_CONNECTIONS=$(jq -r '.incoming_connections' "${MONERO_APP_CONFIG_FILE}")
@@ -97,9 +99,12 @@ export MONERO_DEFAULT_NETWORK="${MONERO_CHAIN}"
 
 BIN_ARGS=()
 # Commenting out options that are replaced by generated config file. We should migrate all these over in a future update.
-BIN_ARGS+=( "--rpc-bind-port=18081" )
+BIN_ARGS+=( "--rpc-bind-port=${APP_MONERO_RPC_PORT}" )
 BIN_ARGS+=( "--rpc-bind-ip=0.0.0.0" )
-BIN_ARGS+=( "--confirm-external-bind" )
+#check if confirm external bind is set to true
+if [[ "${CONFIRMEXTERNALBIND}" == "true" ]]; then
+	BIN_ARGS+=( "--confirm-external-bind" )
+fi
 # BIN_ARGS+=( "--hide-my-port" )
 # check if prune is set to true
 if [[ "${PRUNE}" == "true" ]]; then
