@@ -101,10 +101,11 @@ BIN_ARGS=()
 # Commenting out options that are replaced by generated config file. We should migrate all these over in a future update.
 BIN_ARGS+=( "--rpc-bind-port=${APP_MONERO_RPC_PORT}" )
 BIN_ARGS+=( "--rpc-bind-ip=0.0.0.0" )
+BIN_ARGS+=( "--confirm-external-bind" )
 #check if confirm external bind is set to true
-if [[ "${CONFIRMEXTERNALBIND}" == "true" ]]; then
-	BIN_ARGS+=( "--confirm-external-bind" )
-fi
+# if [[ "${CONFIRMEXTERNALBIND}" == "true" ]]; then
+# 	BIN_ARGS+=( "--confirm-external-bind" )
+# fi
 # BIN_ARGS+=( "--hide-my-port" )
 # check if prune is set to true
 if [[ "${PRUNE}" == "true" ]]; then
