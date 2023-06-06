@@ -57,7 +57,7 @@ if [[ ! -f "${MONERO_ENV_FILE}" ]]; then
 	fi
 	
 	if [[ -z ${MONERO_RPC_USER+x} ]] || [[ -z ${MONERO_RPC_PASS+x} ]] || [[ -z ${MONERO_RPC_AUTH+x} ]]; then
-		MONERO_RPC_USER="umbrel"
+		MONERO_RPC_USER="monero"
 		MONERO_RPC_DETAILS=$("${EXPORTS_APP_DIR}/scripts/rpcauth.py" "${MONERO_RPC_USER}")
 		MONERO_RPC_PASS=$(echo "$MONERO_RPC_DETAILS" | tail -1)
 		MONERO_RPC_AUTH=$(echo "$MONERO_RPC_DETAILS" | head -2 | tail -1 | sed -e "s/^rpc-login=//")
