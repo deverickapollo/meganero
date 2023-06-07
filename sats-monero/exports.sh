@@ -22,6 +22,7 @@ TORPROXYFORCLEARNET="false"
 CLEARNET="false"
 ENABLEBLOCKLIST="false"
 CONFIRMEXTERNALBIND="false"
+RESTRICTEDRPC="true"
 {
 	MONERO_APP_CONFIG_FILE="${EXPORTS_APP_DIR}/data/app/monero-config.json"
 	if [[ -f "${MONERO_APP_CONFIG_FILE}" ]]
@@ -36,6 +37,7 @@ CONFIRMEXTERNALBIND="false"
 				MONERO_NETWORK="stagenet";;
 		esac
 		TOR_ENABLED=$(jq -r '.tor' "${MONERO_APP_CONFIG_FILE}")
+		RESTRICTEDRPC=$(jq -r '.restrictedRpc' "${MONERO_APP_CONFIG_FILE}")
 		I2P_ENABLED=$(jq -r '.i2p' "${MONERO_APP_CONFIG_FILE}")
 		CONFIRMEXTERNALBIND=$(jq -r '.confirmExternalBind' "${MONERO_APP_CONFIG_FILE}")
 		DBSYNCMODE=$(jq -r '.dbSyncMode' "${MONERO_APP_CONFIG_FILE}")
@@ -120,7 +122,11 @@ if [[ "${ENABLEBLOCKLIST}" == "true" ]]; then
 fi
 
 #Configure rpc login credentials 
-BIN_ARGS+=( "--rpc-login=\"${APP_MONERO_RPC_AUTH}\"" )
+if [[ "${RESTRICTEDRPC}" == "true" ]]; then
+	BIN_ARGS+=( "--restricted-rpc" )
+	BIN_ARGS+=( "--rpc-login=\"${APP_MONERO_RPC_AUTH}\"" )
+fi
+
 
 export APP_MONERO_COMMAND=$(IFS=" "; echo "${BIN_ARGS[@]}")
 
