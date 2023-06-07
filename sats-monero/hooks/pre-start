@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Delay booting BMoneroitcoin until the RPC and P2P Tor Hidden Services are ready
+# Delay booting Monero until the RPC and P2P Tor Hidden Services are ready
 
 HIDDEN_SERVICE_FILE="${TOR_DATA_DIR}/app-${APP_ID}-rpc/hostname"
 
