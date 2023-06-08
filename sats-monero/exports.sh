@@ -130,7 +130,7 @@ fi
 
 export APP_MONERO_COMMAND=$(IFS=" "; echo "${BIN_ARGS[@]}")
 
-echo "${APP_MONERO_COMMAND}"
+# echo "${APP_MONERO_COMMAND}"
 
 rpc_hidden_service_file="${EXPORTS_TOR_DATA_DIR}/app-${EXPORTS_APP_ID}-rpc/hostname"
 p2p_hidden_service_file="${EXPORTS_TOR_DATA_DIR}/app-${EXPORTS_APP_ID}-p2p/hostname"
