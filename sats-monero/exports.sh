@@ -109,22 +109,22 @@ BIN_ARGS+=( "--confirm-external-bind" )
 # fi
 # BIN_ARGS+=( "--hide-my-port" )
 # check if prune is set to true
-if [[ "${PRUNE}" == "true" ]]; then
-	BIN_ARGS+=( "--prune-blockchain" )
-fi
+# if [[ "${PRUNE}" == "true" ]]; then
+# 	BIN_ARGS+=( "--prune-blockchain" )
+# fi
 # Set DBSYNCMODE to fast, fastest, or safe
-if [[ "${DBSYNCMODE}" == "fast" || "${DBSYNCMODE}" == "fastest" || "${DBSYNCMODE}" == "safe" ]]; then
-	BIN_ARGS+=( "--db-sync-mode=${DBSYNCMODE}" )
-fi
+# if [[ "${DBSYNCMODE}" == "fast" || "${DBSYNCMODE}" == "fastest" || "${DBSYNCMODE}" == "safe" ]]; then
+# 	BIN_ARGS+=( "--db-sync-mode=${DBSYNCMODE}" )
+# fi
 #Check if enable block list is set to true
 if [[ "${ENABLEBLOCKLIST}" == "true" ]]; then
 	BIN_ARGS+=( "--enable-dns-blocklist" )
 fi
 
 #Configure rpc login credentials 
-if [[ "${RESTRICTEDRPC}" == "true" ]]; then
-	BIN_ARGS+=( "--restricted-rpc" )
-fi
+# if [[ "${RESTRICTEDRPC}" == "true" ]]; then
+# 	BIN_ARGS+=( "--restricted-rpc" )
+# fi
 
 BIN_ARGS+=( "--rpc-login=\"${APP_MONERO_RPC_AUTH}\"" )
 
