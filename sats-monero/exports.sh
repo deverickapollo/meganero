@@ -22,7 +22,7 @@ TORPROXYFORCLEARNET="false"
 CLEARNET="false"
 ENABLEBLOCKLIST="false"
 CONFIRMEXTERNALBIND="false"
-RESTRICTEDRPC="true"
+RESTRICTEDRPC="false"
 {
 	MONERO_APP_CONFIG_FILE="${EXPORTS_APP_DIR}/data/app/monero-config.json"
 	if [[ -f "${MONERO_APP_CONFIG_FILE}" ]]
@@ -124,9 +124,9 @@ fi
 #Configure rpc login credentials 
 if [[ "${RESTRICTEDRPC}" == "true" ]]; then
 	BIN_ARGS+=( "--restricted-rpc" )
-	BIN_ARGS+=( "--rpc-login=\"${APP_MONERO_RPC_AUTH}\"" )
 fi
 
+BIN_ARGS+=( "--rpc-login=\"${APP_MONERO_RPC_AUTH}\"" )
 
 export APP_MONERO_COMMAND=$(IFS=" "; echo "${BIN_ARGS[@]}")
 
