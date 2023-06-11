@@ -108,10 +108,4 @@ export APP_MONERO_P2P_HIDDEN_SERVICE="$(cat "${p2p_hidden_service_file}" 2>/dev/
 	then
 	APP_CONFIG_EXISTS="true"
 	fi
-
-	if [[ "${MONERO_INSTALL_EXISTS}" = "true" ]] && [[ "${APP_CONFIG_EXISTS}" = "false" ]]
-	then
-		# This app is not a fresh install, it's being updated, so preserve existing clearnet over Tor setting
-		export MONERO_INITIALIZE_WITH_CLEARNET_OVER_TOR="true"
-	fi
 } || true
