@@ -1,5 +1,5 @@
 # Description: Umbrel app store configuration file
 # This file is used to configure the Umbrel app store.
 # The app store is a curated list of apps that can be installed on Umbrel.
-id: "sats" # Choose the ID for your app store. This should contain only alphabets ("a to z") and dashes ("-").
-name: "sats" # Choose the name of your app store. It will show up in the UI as "<name> App Store".
+id: "meganero" # Choose the ID for your app store. This should contain only alphabets ("a to z") and dashes ("-").
+name: "meganero" # Choose the name of your app store. It will show up in the UI as "<name> App Store".
