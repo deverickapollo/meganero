@@ -18,9 +18,9 @@ port: 8889
 submitter: Deverick
 submission: https://github.com/hashes4merkle/hundredsats
 gallery:
-  - https://github.com/deverickapollo/umbrel-monero/blob/6cad07a3bead68f474fcac58d868aef2f95ddea3/pictures/Monero%20Dashboard.png
-  - https://github.com/deverickapollo/umbrel-monero/blob/6cad07a3bead68f474fcac58d868aef2f95ddea3/pictures/Monero%20Connect%20Page.png
-  - https://github.com/deverickapollo/umbrel-monero/blob/6cad07a3bead68f474fcac58d868aef2f95ddea3/pictures/Monero%20Advanced%20Settings.png
+  - https://raw.githubusercontent.com/deverickapollo/umbrel-monero/master/pictures/Monero%20Dashboard%20Menu.png
+  - https://raw.githubusercontent.com/deverickapollo/umbrel-monero/master/pictures/Connect%20Wallet.png
+  - https://raw.githubusercontent.com/deverickapollo/umbrel-monero/master/pictures/Advanced%20Settings.png
 path: ""
 defaultPassword: ""
 releaseNotes: >-
