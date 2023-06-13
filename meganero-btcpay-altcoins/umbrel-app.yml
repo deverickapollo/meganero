@@ -1,6 +1,6 @@
 manifestVersion: 1
 id: meganero-btcpay-altcoins
-name: BTCPay Server (Monero)
+name: BTCPay Server (Monero) - IN DEVELOPMENT
 tagline: Accept Bitcoin and Monero payments with 0 fees & no 3rd party
 icon: https://raw.githubusercontent.com/deverickapollo/umbrel-monero/master/ui/src/assets/btcpay.png
 category: Finance
