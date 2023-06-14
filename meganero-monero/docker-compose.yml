@@ -5,7 +5,7 @@ services:
     environment:
       APP_HOST: sats-server_1
       APP_PORT: 8889
-      PROXY_AUTH_ADD: "false"
+      PROXY_AUTH_ADD: "true"
       
   sats-server_1:
     image: deverickapollo/umbrel-monero:master
