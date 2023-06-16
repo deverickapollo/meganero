@@ -3,13 +3,12 @@ version: "3.7"
 services:
   app_proxy:
     environment:
-      APP_HOST: sats-server_1
+      APP_HOST: meganero-monero_server_1
       APP_PORT: 8889
       PROXY_AUTH_ADD: "true"
       
-  sats-server_1:
+  server:
     image: deverickapollo/umbrel-monero:master
-    container_name: sats-server_1
     depends_on: [monerod]
     restart: on-failure
     expose:
