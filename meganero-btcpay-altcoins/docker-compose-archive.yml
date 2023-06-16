@@ -5,7 +5,7 @@ services:
     environment:
       APP_HOST: sats-btcpay-altcoins_web_1
       APP_PORT: 49392
-      PROXY_AUTH_ADD: "true"
+      PROXY_AUTH_ADD: "false"
   web:
     image: btcpayserver/btcpayserver:1.8.1-altcoins@sha256:2ee57e0ba118406c286d7a9fd70f684bdbfd0a1a8e5b890aeb2e81e915a3ea72 # 1.8.1-altcoins
     user: "1000:1000"

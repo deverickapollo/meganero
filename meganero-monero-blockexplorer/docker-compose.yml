@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: sats-explorer_1
+      APP_PORT: 8892
+      PROXY_AUTH_ADD: "false"
+      
+  explore:
+    image: xmrblocks:latest
+    build: ./onion-monero-blockchain-explorer
+    container_name: explore
+    restart: unless-stopped
+    volumes:
+      - ${APP_MONERO_DATA_DIR}:/home/monero/.bitmonero
+    ports:
+      - 8081:8081
+    command: ["./xmrblocks --daemon-url=meganero-monero_monerod_1:18081 --enable-json-api --enable-autorefresh-option --enable-emission-monitor --enable-pusher"]
